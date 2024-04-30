@@ -1,7 +1,7 @@
 from sqlalchemy import SmallInteger, VARCHAR, UUID, ForeignKey, TIMESTAMP
 from sqlalchemy.orm import Mapped, mapped_column
 
-from src.database import BaseModel
+from src.database import BaseModel, engine
 
 
 class UserModel(BaseModel):
@@ -10,7 +10,6 @@ class UserModel(BaseModel):
     id: Mapped[UUID] = mapped_column(
         UUID,
         primary_key=True,
-        autoincrement=True,
         name='pk_id'
     )
     name: Mapped[VARCHAR] = mapped_column(
@@ -39,7 +38,6 @@ class ProductModel(BaseModel):
     id: Mapped[UUID] = mapped_column(
         UUID,
         primary_key=True,
-        autoincrement=True,
         name='pk_id'
     )
     name: Mapped[VARCHAR] = mapped_column(
@@ -70,7 +68,6 @@ class RationModel(BaseModel):
     id: Mapped[UUID] = mapped_column(
         UUID,
         primary_key=True,
-        autoincrement=True,
         name='pk_id'
     )
     user_id: Mapped[UUID] = mapped_column(
@@ -95,3 +92,7 @@ class RationModel(BaseModel):
         nullable=False,
         name='time_to_eat'
     )
+
+
+def create_db() -> None:
+    BaseModel.metadata.create_all(engine)

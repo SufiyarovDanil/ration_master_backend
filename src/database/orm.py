@@ -1,10 +1,10 @@
 from sqlalchemy import SmallInteger, VARCHAR, UUID, ForeignKey, TIMESTAMP
 from sqlalchemy.orm import Mapped, mapped_column
 
-from src.database import BaseModel, engine
+from src.database import BaseORM, engine
 
 
-class UserModel(BaseModel):
+class UserModel(BaseORM):
     __tablename__ = 'user'
 
     id: Mapped[UUID] = mapped_column(
@@ -32,7 +32,7 @@ class UserModel(BaseModel):
         name='weight'
     )
 
-class ProductModel(BaseModel):
+class ProductModel(BaseORM):
     __tablename__ = 'product'
 
     id: Mapped[UUID] = mapped_column(
@@ -62,7 +62,7 @@ class ProductModel(BaseModel):
         name='carbohydrate'
     )
 
-class RationModel(BaseModel):
+class RationModel(BaseORM):
     __tablename__ = 'ration'
 
     id: Mapped[UUID] = mapped_column(
@@ -95,4 +95,4 @@ class RationModel(BaseModel):
 
 
 def create_db() -> None:
-    BaseModel.metadata.create_all(engine)
+    BaseORM.metadata.create_all(engine)

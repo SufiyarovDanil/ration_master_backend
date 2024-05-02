@@ -7,6 +7,7 @@ from fastapi.exceptions import RequestValidationError
 
 from api.routers.user import router as user_router
 from api.routers.product import router as prod_router
+from api.routers.ration import router as ration_router
 from api.schemas import OutputSchema
 
 
@@ -37,6 +38,7 @@ app: FastAPI = FastAPI(
 
 app.include_router(user_router)
 app.include_router(prod_router)
+app.include_router(ration_router)
 app.add_exception_handler(
     RequestValidationError,
     validation_exception_handler

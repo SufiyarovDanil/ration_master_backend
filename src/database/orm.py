@@ -1,5 +1,5 @@
 from sqlalchemy import SmallInteger, VARCHAR, UUID, ForeignKey, TIMESTAMP
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.database import BaseORM, engine
 
@@ -92,6 +92,7 @@ class RationModel(BaseORM):
         nullable=False,
         name='time_to_eat'
     )
+    product: Mapped[ProductModel] = relationship(ProductModel)
 
 
 def create_db() -> None:

@@ -2,6 +2,7 @@ from datetime import datetime
 from uuid import UUID, uuid4
 
 from sqlalchemy import select, delete
+from sqlalchemy.orm import joinedload
 
 from src.database import session_factory
 from src.database.orm import RationModel, UserModel, ProductModel
@@ -13,12 +14,12 @@ def create_ration(user_id: UUID, prod_id: UUID, product_gramm: int,
         user_exists: bool = (
             session.execute(
                 select(UserModel).where(UserModel.id == user_id)
-            ).one_or_none() is None
+            ).one_or_none() is not None
         )
         prod_exists: bool = (
             session.execute(
                 select(ProductModel).where(ProductModel.id == prod_id)
-            ).one_or_none() is None
+            ).one_or_none() is not None
         )
 
         if not user_exists or not prod_exists:
@@ -53,7 +54,7 @@ def remove_ration(id: UUID) -> bool:
 
 def get_ration(id: UUID) -> RationModel | None:
     with session_factory() as session:
-        query = select(RationModel).where(RationModel.id==id)
+        query = select(RationModel).where(RationModel.id==id).options(joinedload(RationModel.product))
         result = session.execute(query)
         ration = result.scalar()
 
@@ -62,7 +63,7 @@ def get_ration(id: UUID) -> RationModel | None:
 
 def get_all_rations() -> list[RationModel] | None:
     with session_factory() as session:
-        query = select(RationModel)
+        query = select(RationModel).options(joinedload(RationModel.product))
         result = session.execute(query)
         rations = result.scalars().all()
     

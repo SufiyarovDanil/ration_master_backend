@@ -12,5 +12,4 @@ engine: Engine = create_engine(
     echo=True
 )
 
-
 session_factory: sessionmaker[Session] = sessionmaker(engine)

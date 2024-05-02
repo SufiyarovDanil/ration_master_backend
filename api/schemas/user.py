@@ -1,5 +1,5 @@
-from pydantic import BaseModel, Field, computed_field
-from typing import Any
+from pydantic import BaseModel
+from pydantic.types import UUID4
 
 
 class UserCreateSchema(BaseModel):
@@ -9,21 +9,5 @@ class UserCreateSchema(BaseModel):
     weight: int
 
 
-class UserOutputSchema(BaseModel):
-    data: dict[str, Any] | None = Field(default=None)
-
-    def __init__(self,
-                 data: dict[str, Any] | None = None,
-                 error: dict[str, str] | None = None):
-        super().__init__(data=data, error=error)
-        self.data = data
-        self.error = error
-    
-    @computed_field
-    @property
-    def error(self) -> dict[str, str] | None:
-        return self._error
-    
-    @error.setter
-    def error(self, value: str | None) -> None:
-        self._error = value if value is None else {'message': value}
+class UserGetSchema(BaseModel):
+    id: UUID4

@@ -1,10 +1,10 @@
 from uuid import UUID
 
-from fastapi import APIRouter, Depends
-from fastapi.responses import JSONResponse, Response
-from fastapi.encoders import jsonable_encoder
+from fastapi import APIRouter
+from pydantic.types import UUID4
 
-from api.schemas.user import UserCreateSchema, UserOutputSchema
+from api.schemas import OutputSchema
+from api.schemas.user import UserCreateSchema
 from src import user as user_service
 
 router: APIRouter = APIRouter(
@@ -13,16 +13,15 @@ router: APIRouter = APIRouter(
 )
 
 
-@router.post('/user/create')
-def create_user(user_data: UserCreateSchema) -> UserOutputSchema:
+@router.post('/users/create')
+async def create_user(user_schema: UserCreateSchema) -> OutputSchema:
     user_id = user_service.create_user(
-        user_data.name,
-        user_data.password,
-        user_data.height,
-        user_data.weight
+        user_schema.name,
+        user_schema.password,
+        user_schema.height,
+        user_schema.weight
     )
-
-    result = UserOutputSchema()
+    result = OutputSchema()
 
     if user_id:
         result.data = user_id
@@ -32,9 +31,45 @@ def create_user(user_data: UserCreateSchema) -> UserOutputSchema:
     return result
 
 
-@router.get('/user/{id}')
-def get_user(id: UUID) -> JSONResponse:
-    user = user_service.get_user(id)
-    
+@router.delete('/users/{user_id}')
+async def remove_user(user_id: UUID4) -> OutputSchema:
+    deleted = user_service.remove_user(user_id)
+    result = OutputSchema()
 
-    return JSONResponse(content=jsonable_encoder(user), status_code=200)
+    if not deleted:
+        result.error = "User not found!"
+
+    return result
+
+
+@router.get('/users')
+async def get_all_users() -> OutputSchema:
+    users = user_service.get_all_users()
+    result = OutputSchema()
+
+    if users:
+        result.data = { "users": [{"id": user.id,
+                                   "login": user.name,
+                                   "height": user.height,
+                                   "weight": user.weight} for user in users]}
+    else:
+        result.error = "User not found!"
+
+    return result
+
+
+@router.get('/users/{user_id}')
+async def get_user(user_id: UUID4) -> OutputSchema:
+    user = user_service.get_user(user_id)
+    result = OutputSchema()
+
+    if user:
+        result.data = {
+            "login": user.name,
+            "height": user.height,
+            "weight": user.weight
+        }
+    else:
+        result.error = "User not found!"
+
+    return result

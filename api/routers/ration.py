@@ -85,3 +85,8 @@ async def get_ration(ration_id: UUID4) -> OutputSchema:
         result.error = "Ration not found!"
 
     return result
+
+
+@router.get('/rations/user/{user_id}')
+async def get_rations_of_user(user_id: UUID4) -> OutputSchema:
+    pass

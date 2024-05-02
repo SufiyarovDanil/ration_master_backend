@@ -1,11 +1,11 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from pydantic.types import UUID4, FutureDatetime
 
 
 class RationCreateSchema(BaseModel):
     user_id: UUID4
     product_id: UUID4
-    product_gramm: int
+    product_gramm: int = Field(gt=0)
     time_to_eat: FutureDatetime
 
 

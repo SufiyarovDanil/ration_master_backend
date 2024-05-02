@@ -8,21 +8,24 @@ from src.database.orm import UserModel
 
 def create_user(name: str, password: str, height: int,
                 weight: int) -> UUID | None:
-    with session_factory() as session:
-        user_id: UUID = uuid4()
-        new_user = UserModel(
-            id=user_id,
-            name=name,
-            password=hash(password),
-            height=height,
-            weight=weight
-        )
+    try:
+        with session_factory() as session:
+            user_id: UUID = uuid4()
+            new_user = UserModel(
+                id=user_id,
+                name=name,
+                password=hash(password),
+                height=height,
+                weight=weight
+            )
 
-        session.add(new_user)
+            session.add(new_user)
 
-        query = select(UserModel).where(UserModel.id==user_id)
-        result = session.execute(query)
-        session.commit()
+            query = select(UserModel).where(UserModel.id==user_id)
+            result = session.execute(query)
+            session.commit()
+    except Exception:
+        return None
     
     user: UserModel = result.mappings().one_or_none()
 

@@ -1,5 +1,3 @@
-from uuid import UUID
-
 from fastapi import APIRouter
 from pydantic.types import UUID4
 
@@ -9,7 +7,7 @@ from src import user as user_service
 
 router: APIRouter = APIRouter(
     prefix='/api',
-    tags=['Album']
+    tags=['User']
 )
 
 

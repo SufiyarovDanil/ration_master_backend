@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 
 from api.routers.user import router as user_router
+from api.routers.product import router as prod_router
 from api.schemas import OutputSchema
 
 
@@ -31,12 +32,11 @@ async def validation_exception_handler(
 
 app: FastAPI = FastAPI(
     title='Ration master API',
-    swagger_ui_parameters={
-        'displayRequestDuration': True,
-        'defaultModelsExpandDepth': 0
-    })
+    swagger_ui_parameters={'displayRequestDuration': True}
+)
 
 app.include_router(user_router)
+app.include_router(prod_router)
 app.add_exception_handler(
     RequestValidationError,
     validation_exception_handler

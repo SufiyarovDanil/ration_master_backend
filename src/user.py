@@ -6,7 +6,8 @@ from src.database import session_factory
 from src.database.orm import UserModel
 
 
-def create_user(name: str, password: str, height: int, weight: int) -> UUID | None:
+def create_user(name: str, password: str, height: int,
+                weight: int) -> UUID | None:
     with session_factory() as session:
         user_id: UUID = uuid4()
         new_user = UserModel(

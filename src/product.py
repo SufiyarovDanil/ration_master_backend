@@ -1,28 +1,33 @@
 from uuid import UUID, uuid4
 
 from sqlalchemy import select, delete
+from sqlalchemy.exc import IntegrityError
 
 from src.database import session_factory
 from src.database.orm import ProductModel
 
 
-def create_product(name: str, protein: int, fat: int,
+def create_product(name: str, calorie: int, protein: int, fat: int,
                    carbohydrate: int) -> UUID | None:
     with session_factory() as session:
-        product_id: UUID = uuid4()
-        new_prod = ProductModel(
-            id=product_id,
-            name=name,
-            protein=protein,
-            fat=fat,
-            carbohydrate=carbohydrate
-        )
+        try:
+            product_id: UUID = uuid4()
+            new_prod = ProductModel(
+                id=product_id,
+                name=name,
+                calorie=calorie,
+                protein=protein,
+                fat=fat,
+                carbohydrate=carbohydrate
+            )
 
-        session.add(new_prod)
+            session.add(new_prod)
 
-        query = select(ProductModel).where(ProductModel.id == product_id)
-        result = session.execute(query)
-        session.commit()
+            query = select(ProductModel).where(ProductModel.id == product_id)
+            result = session.execute(query)
+            session.commit()
+        except IntegrityError:
+            return None
     
     prod: ProductModel = result.mappings().one_or_none()
 

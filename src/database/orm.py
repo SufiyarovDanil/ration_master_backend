@@ -4,34 +4,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.database import BaseORM, engine
 
 
-class UserModel(BaseORM):
-    __tablename__ = 'user'
-
-    id: Mapped[UUID] = mapped_column(
-        UUID,
-        primary_key=True,
-        name='pk_id'
-    )
-    name: Mapped[VARCHAR] = mapped_column(
-        VARCHAR(32),
-        nullable=False,
-        unique=True,
-        name='name'
-    )
-    password: Mapped[VARCHAR] = mapped_column(
-        VARCHAR(64),
-        nullable=False,
-        name='password'
-    )
-    height: Mapped[SmallInteger] = mapped_column(
-        SmallInteger,
-        name='height'
-    )
-    weight: Mapped[SmallInteger] = mapped_column(
-        SmallInteger,
-        name='weight'
-    )
-
 class ProductModel(BaseORM):
     __tablename__ = 'product'
 
@@ -45,6 +17,11 @@ class ProductModel(BaseORM):
         nullable=False,
         unique=True,
         name='name'
+    )
+    calorie: Mapped[SmallInteger] = mapped_column(
+        SmallInteger,
+        nullable=False,
+        name='calorie'
     )
     protein: Mapped[SmallInteger] = mapped_column(
         SmallInteger,
@@ -62,6 +39,7 @@ class ProductModel(BaseORM):
         name='carbohydrate'
     )
 
+
 class RationModel(BaseORM):
     __tablename__ = 'ration'
 
@@ -69,12 +47,6 @@ class RationModel(BaseORM):
         UUID,
         primary_key=True,
         name='pk_id'
-    )
-    user_id: Mapped[UUID] = mapped_column(
-        UUID,
-        ForeignKey('user.pk_id', ondelete='SET NULL'),
-        nullable=False,
-        name='fk_user_id'
     )
     product_id: Mapped[UUID] = mapped_column(
         UUID,
@@ -86,6 +58,11 @@ class RationModel(BaseORM):
         SmallInteger,
         nullable=False,
         name='product_gramm'
+    )
+    meal_time: Mapped[SmallInteger] = mapped_column(
+        SmallInteger,
+        nullable=False,
+        name='meal_time'
     )
     time_to_eat: Mapped[TIMESTAMP] = mapped_column(
         TIMESTAMP,

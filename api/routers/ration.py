@@ -14,7 +14,6 @@ router: APIRouter = APIRouter(
 @router.post('/rations/create')
 async def create_ration(ration_schema: RationCreateSchema) -> OutputSchema:
     ration_id = ration_service.create_ration(
-        ration_schema.user_id,
         ration_schema.product_id,
         ration_schema.product_gramm,
         ration_schema.time_to_eat
@@ -47,7 +46,6 @@ async def get_all_rations() -> OutputSchema:
 
     if rations:
         result.data = { "rations": [{"id": ration.id,
-                                     "user_id": ration.user_id,
                                      "product": {
                                          "id": ration.product.id,
                                          "name": ration.product.name,
@@ -70,7 +68,6 @@ async def get_ration(ration_id: UUID4) -> OutputSchema:
 
     if ration:
         result.data = {
-            "user_id": ration.user_id,
             "product": {
                 "id": ration.product.id,
                 "name": ration.product.name,
@@ -85,8 +82,3 @@ async def get_ration(ration_id: UUID4) -> OutputSchema:
         result.error = "Ration not found!"
 
     return result
-
-
-@router.get('/rations/user/{user_id}')
-async def get_rations_of_user(user_id: UUID4) -> OutputSchema:
-    pass

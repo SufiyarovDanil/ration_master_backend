@@ -5,6 +5,7 @@ from api.schemas import OutputSchema
 from api.schemas.product import ProductCreateSchema
 from src import product as prod_service
 
+
 router: APIRouter = APIRouter(
     prefix='/api',
     tags=['Product']
@@ -15,6 +16,7 @@ router: APIRouter = APIRouter(
 async def create_product(prod_schema: ProductCreateSchema) -> OutputSchema:
     prod_id = prod_service.create_product(
         prod_schema.name,
+        prod_schema.calorie,
         prod_schema.protein,
         prod_schema.fat,
         prod_schema.carbohydrate
@@ -64,7 +66,6 @@ async def get_user(prod_id: UUID4) -> OutputSchema:
 
     if prod:
         result.data = {
-            "id": prod.id,
             "name": prod.name,
             "protein": prod.protein,
             "fat": prod.fat,

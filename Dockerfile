@@ -10,4 +10,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD uvicorn main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8070
+CMD uvicorn main:app --bind 0.0.0.0:8000

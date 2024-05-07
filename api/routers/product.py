@@ -50,6 +50,7 @@ async def get_all_products() -> OutputSchema:
     if prods:
         result.data = {"products": [{"id": prod.id,
                                      "name": prod.name,
+                                     "calorie": prod.calorie,
                                      "protein": prod.protein,
                                      "fat": prod.fat,
                                      "carbohydrate": prod.carbohydrate} for prod in prods]}
@@ -67,6 +68,7 @@ async def get_user(prod_id: UUID4) -> OutputSchema:
     if prod:
         result.data = {
             "name": prod.name,
+            "calorie": prod.calorie,
             "protein": prod.protein,
             "fat": prod.fat,
             "carbohydrate": prod.carbohydrate

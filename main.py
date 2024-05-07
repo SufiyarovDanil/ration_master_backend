@@ -7,6 +7,7 @@ from fastapi.exceptions import RequestValidationError
 
 from api.routers.product import router as prod_router
 from api.routers.ration import router as ration_router
+from api.routers.calculation import router as calc_router
 from api.schemas import OutputSchema
 from src.database.orm import create_db
 
@@ -38,6 +39,7 @@ app: FastAPI = FastAPI(
 
 app.include_router(prod_router)
 app.include_router(ration_router)
+app.include_router(calc_router)
 app.add_exception_handler(RequestValidationError, valid_data_exc_handler)
 
 create_db()

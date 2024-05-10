@@ -59,4 +59,4 @@ async def calculate_ration(
         ration[meal] = product
         fitted_products.remove(product)
 
-    return OutputSchema(data={'cpfc': cpfc, 'ration': ration})
+    return OutputSchema(data=ration)

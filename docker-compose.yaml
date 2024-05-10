@@ -1,12 +1,5 @@
 version: "3.7"
 services:
-  # ration_master_db:
-  #   image: keinos/sqlite3:latest
-  #   container_name: ration_master_db
-  #   ports:
-  #     - "5432:5432"
-  #   volumes:
-  #     - "sqlite_data:/workspace"
   ration_master_backend:
     container_name: rm_backend
     build:

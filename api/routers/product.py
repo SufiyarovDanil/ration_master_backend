@@ -32,7 +32,7 @@ async def create_product(prod_schema: ProductCreateSchema) -> OutputSchema:
 
 
 @router.delete('/products/{prod_id}')
-async def remove_user(prod_id: UUID4) -> OutputSchema:
+async def remove_product(prod_id: UUID4) -> OutputSchema:
     deleted = prod_service.remove_product(prod_id)
     result = OutputSchema()
 
@@ -61,7 +61,7 @@ async def get_all_products() -> OutputSchema:
 
 
 @router.get('/products/{prod_id}')
-async def get_user(prod_id: UUID4) -> OutputSchema:
+async def get_product(prod_id: UUID4) -> OutputSchema:
     prod = prod_service.get_product(prod_id)
     result = OutputSchema()
 

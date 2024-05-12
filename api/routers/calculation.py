@@ -40,7 +40,7 @@ async def calculate_ration(
                                   physical_activity)
     prods = prod_service.get_all_products()
     result = OutputSchema()
-    
+
     if not prods:
         result.error = 'products not found!'
         return result
@@ -64,5 +64,7 @@ async def calculate_ration(
         product = rnd.choice(fitted_products)
         ration[meal] = product
         fitted_products.remove(product)
+    
+    result.data = ration
 
-    return OutputSchema(data=ration)
+    return result

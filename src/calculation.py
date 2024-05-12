@@ -6,9 +6,9 @@ def __calc_bmr(weight: int, height: int, age: int, gender: GenderEnum) -> float:
     Вычисление базового метаболизма
     """
     if gender == GenderEnum.male:
-        return 88.36 + 13.4 * weight + 4.8 * height - 5.7 * age
+        return 655.0 + 9.6 * weight + 1.8 * height - 4.7 * age
     
-    return 447.6 + 9.2 * weight + 3.1 * height - 4.3 * age
+    return 66.0 + 13.7 * weight + 5.0 * height - 6.8 * age
 
 
 def __get_activity_coefficient(physical_activity: PhysicalActivityEnum) -> float:

@@ -1,4 +1,4 @@
-from sqlalchemy import SmallInteger, VARCHAR, UUID, ForeignKey, TIMESTAMP
+from sqlalchemy import SmallInteger, VARCHAR, UUID, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.database import BaseORM, engine
@@ -31,7 +31,7 @@ class ProductModel(BaseORM):
     fat: Mapped[SmallInteger] = mapped_column(
         SmallInteger,
         nullable=False,
-        name='weight'
+        name='fat'
     )
     carbohydrate: Mapped[SmallInteger] = mapped_column(
         SmallInteger,
@@ -63,11 +63,6 @@ class RationModel(BaseORM):
         SmallInteger,
         nullable=False,
         name='meal_time'
-    )
-    time_to_eat: Mapped[TIMESTAMP] = mapped_column(
-        TIMESTAMP,
-        nullable=False,
-        name='time_to_eat'
     )
     product: Mapped[ProductModel] = relationship(ProductModel)
 

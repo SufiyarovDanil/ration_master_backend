@@ -1,23 +1,23 @@
--- CREATE TABLE product (
---         pk_id UUID NOT NULL, 
---         name VARCHAR(64) NOT NULL, 
---         calorie SMALLINT NOT NULL,
---         protein SMALLINT NOT NULL,
---         fat SMALLINT NOT NULL,
---         carbohydrate SMALLINT NOT NULL,
---         PRIMARY KEY (pk_id),
---         UNIQUE (name)
--- )
+CREATE TABLE IF NOT EXISTS product (
+        pk_id UUID NOT NULL, 
+        name VARCHAR(64) NOT NULL, 
+        calorie SMALLINT NOT NULL,
+        protein SMALLINT NOT NULL,
+        fat SMALLINT NOT NULL,
+        carbohydrate SMALLINT NOT NULL,
+        PRIMARY KEY (pk_id),
+        UNIQUE (name)
+);
 
--- CREATE TABLE ration (
---         pk_id UUID NOT NULL,
---         fk_product_id UUID NOT NULL,
---         product_gramm SMALLINT NOT NULL,
---         meal_time SMALLINT NOT NULL,
---         time_to_eat TIMESTAMP NOT NULL,
---         PRIMARY KEY (pk_id),
---         FOREIGN KEY(fk_product_id) REFERENCES product (pk_id) ON DELETE SET NULL
--- )
+CREATE TABLE IF NOT EXISTS ration (
+        pk_id UUID NOT NULL,
+        fk_product_id UUID NOT NULL,
+        product_gramm SMALLINT NOT NULL,
+        meal_time SMALLINT NOT NULL,
+        time_to_eat TIMESTAMP NOT NULL,
+        PRIMARY KEY (pk_id),
+        FOREIGN KEY(fk_product_id) REFERENCES product (pk_id) ON DELETE SET NULL
+);
 
 INSERT INTO product (pk_id, name, calorie, protein, fat, carbohydrate) VALUES
 ('20cd35c9-d621-40a9-ad77-80e605740697', 'Омлет с овощами и сыром', 140, 9, 10, 2),
@@ -78,4 +78,4 @@ INSERT INTO product (pk_id, name, calorie, protein, fat, carbohydrate) VALUES
 ('68c6a382-a70e-4d2f-b130-3267e63ec0d3', 'Печеный картофель с говядиной', 93, 10, 2, 9),
 ('cc127b6b-471f-4c7c-8c6b-8a6908ad355a', 'Творожные оладьи с медом', 225, 7, 2, 43),
 ('c26b7ba1-1e1d-4a9b-81f2-f7a883d00ff7', 'Рисовая каша с молоком и орехами', 103, 3, 4, 17),
-('cab8dbf0-9773-4f03-9020-6c87dd6a8667', 'Салат с тунцом и овощами', 73, 6, 5, 2)
+('cab8dbf0-9773-4f03-9020-6c87dd6a8667', 'Салат с тунцом и овощами', 73, 6, 5, 2);

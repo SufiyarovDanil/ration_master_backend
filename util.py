@@ -6,7 +6,8 @@ def fill_db() -> None:
     cursor = connection.cursor()
 
     with  open('./res/init.sql', encoding='utf-8') as f:
-        cursor.execute(f.read())
+        for cmd in f.read().split(';'):
+            cursor.execute(cmd)
 
     connection.commit()
     connection.close()

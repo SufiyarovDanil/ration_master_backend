@@ -48,8 +48,8 @@ def calc_cpfc(age: int, weight: int, height: int, gender: GenderEnum,
     carbohydrate: float = (tdee - protein * 4.0 - fat * 9.0) / 4.0
 
     return {
-        "calorie": calorie,
-        "protein": protein,
-        "fat": fat,
-        "carbohydrate": carbohydrate
+        "calorie": int(calorie),
+        "protein": int(protein),
+        "fat": int(fat),
+        "carbohydrate": int(carbohydrate)
     }

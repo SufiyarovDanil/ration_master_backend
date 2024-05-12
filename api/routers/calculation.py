@@ -39,14 +39,20 @@ async def calculate_ration(
     cpfc = calc_service.calc_cpfc(age, weight, height, gender,
                                   physical_activity)
     prods = prod_service.get_all_products()
+    result = OutputSchema()
+    
+    if not prods:
+        result.error = 'products not found!'
+        return result
+
     calorie_per_meal = cpfc['calorie'] / 3.0
     fitted_products = [{
         'name': i.name,
-        'calorie': calorie_per_meal,
-        'protein': i.protein * (calorie_per_meal / i.calorie),
-        'fat': i.fat * (calorie_per_meal / i.calorie),
-        'carbohydrate': i.carbohydrate * (calorie_per_meal / i.calorie),
-        'gramms': 100.0 * (calorie_per_meal / i.calorie)
+        'calorie': int(calorie_per_meal),
+        'protein': int(i.protein * (calorie_per_meal / i.calorie)),
+        'fat': int(i.fat * (calorie_per_meal / i.calorie)),
+        'carbohydrate': int(i.carbohydrate * (calorie_per_meal / i.calorie)),
+        'gramms': int(100.0 * (calorie_per_meal / i.calorie))
     } for i in prods]
     ration = {
         'breakfast': None,
